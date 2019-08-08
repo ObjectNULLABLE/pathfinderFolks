@@ -4,7 +4,7 @@ class NPCList extends Component {
   render() {
     let { npc, chunkNumber } = this.props
     return (
-      <div className='folk-section'>
+      <div className=''>
         {npc.length > 0 &&
           <div className='folk-list'>
             {
