@@ -1,0 +1,70 @@
+body {
+  background-image: url('http://imagizer.imageshack.com/a/img924/5383/6TKpYP.jpg');
+  background-image: url('https://wallpapercave.com/wp/wp2427537.jpg');
+  background-position: 50% 50%;
+  background-size: cover;
+  font-family: 'Alegreya', serif;
+}
+
+.App {
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.folk-section{
+  /* height: 100vh; */
+}
+
+.folk-list {
+  margin: 3vw 5vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr; 
+  grid-gap: 2em;
+}
+
+.folk-card {
+  /* width: 20%; */
+  box-shadow: 2px 2px 5px;
+  background-color: white;
+  height: 25vh;
+  border-radius: 5px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-around; */
+  transition: 0.2s ease-in-out;
+}
+
+.folk-card:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 6px;
+}
+
+.menu {
+  height: 3em;
+  background-color: white;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 2px 0 5px;
+  margin: 0 3em;
+}
