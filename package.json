@@ -2,8 +2,10 @@
   "name": "react-lesson",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://objectnullable.github.io/pathfinder-folks",
   "dependencies": {
     "d3": "^5.9.7",
+    "gh-pages": "^2.1.1",
     "lodash": "^4.17.15",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -12,6 +14,8 @@
     "semantic-ui-react": "^0.87.3"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
