@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "23452f2cfd6a70303fbbdbca38e34450",
+    "revision": "454bf485016170dbd904fc976d87eee1",
     "url": "/pathfinder-folks/index.html"
   },
   {
-    "revision": "ccb9b6a49521004f7427",
-    "url": "/pathfinder-folks/static/css/main.01b94365.chunk.css"
+    "revision": "012e416abcb36e35fdea",
+    "url": "/pathfinder-folks/static/css/main.c1286b6d.chunk.css"
   },
   {
-    "revision": "fd8784a34132bbbb362d",
-    "url": "/pathfinder-folks/static/js/2.cbdb3ad6.chunk.js"
+    "revision": "fa4bfd8b561be28d581a",
+    "url": "/pathfinder-folks/static/js/2.89597895.chunk.js"
   },
   {
-    "revision": "ccb9b6a49521004f7427",
-    "url": "/pathfinder-folks/static/js/main.b39caf79.chunk.js"
+    "revision": "012e416abcb36e35fdea",
+    "url": "/pathfinder-folks/static/js/main.17220640.chunk.js"
   },
   {
     "revision": "eb9bb2524a1f72f09ebc",

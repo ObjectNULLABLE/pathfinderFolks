@@ -11,10 +11,10 @@
  * See https://goo.gl/2aRDsh
  */
 
-importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.0/workbox-sw.js");
+importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/pathfinder-folks/precache-manifest.f6e4b258af832416708fc3b9bf5540ce.js"
+  "/pathfinder-folks/precache-manifest.371ec1d62d15a130278e61a1ea58a0df.js"
 );
 
 self.addEventListener('message', (event) => {
