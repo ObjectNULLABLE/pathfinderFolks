@@ -2,15 +2,14 @@ import React, { Component } from 'react';
 import './App.css';
 
 import Folks from './Folks';
-import Menu from './Menu';
+import AppMenu from './AppMenu';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Menu />
+        <AppMenu />
         <Folks />
-        <div></div>
       </div>
     );
   }

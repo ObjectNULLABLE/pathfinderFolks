@@ -5,7 +5,7 @@ class FolkCard extends Component {
   render() {
     let { folk } = this.props
     return (
-      <GridColumn>
+      <GridColumn computer={5} >
         <Card
           index={this.props.folkIndex}
           className="folk-card"

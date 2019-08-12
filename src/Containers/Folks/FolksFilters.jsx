@@ -5,10 +5,10 @@ class FolksFilters extends Component {
   render() {
     return (
       <div className="folks-filters">
-        <Input placeholder="Name" type="text" />
-        <Input placeholder="Class" type="text" />
-        <Input placeholder="Race" type="text" />
-        <Input placeholder="CR" type="text" />
+        <Input name="name" placeholder="Name" onChange={this.props.onFilter} />
+        <Input name="class" placeholder="Class" onChange={this.props.onFilter} />
+        <Input name="race" placeholder="Race" onChange={this.props.onFilter} />
+        <Input name="cr" placeholder="CR" onChange={this.props.onFilter} />
         <Button>Apply</Button>
       </div>
     );

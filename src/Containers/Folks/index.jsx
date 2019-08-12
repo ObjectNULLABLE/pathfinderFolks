@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { csv } from 'd3';
-import chunk from 'lodash/chunk'
+import debounce from 'lodash/debounce';
 
-import NPC from '../../Data/npc.csv'
+import allFolks from '../../Data/npc.csv'
 
 import { Pagination } from 'semantic-ui-react'
 import FolksList from './FolksList';
@@ -15,18 +15,36 @@ class Folks extends Component {
 
     this.state = {
       selectedPage: 1,
-      NPC: [],
+      allFolks: [],
       selectedFolk: null,
-      cardsOnPage: 15
+      folksOnPage: 10,
+      filters: {
+        name: null,
+        class: null,
+        race: null,
+        cr: null,
+      }
     }
-    csv(NPC).then(data => {
-      let chunkedData = chunk(data, this.state.cardsOnPage)
-      this.setState({ NPC: chunkedData })
-    })
+    csv(allFolks).then(data => { this.setState({ initialFolksArray: data, allFolks: data }) })
 
     this.onPageChange = this.onPageChange.bind(this)
     this.onModalClose = this.onModalClose.bind(this)
     this.onCardClick = this.onCardClick.bind(this)
+    this.onFilter = this.onFilter.bind(this)
+  }
+
+  onFilter(event, data) {
+    // let filteredFolks = this.state.initialFolksArray.filter(folk => {
+    //   return folk.Name.toLowerCase().includes(data.value.toLowerCase())
+    // })
+    // console.log(filteredFolks);
+    // this.setState({ allFolks: filteredFolks })
+    this.setState((state) => ({
+      filters: {
+        ...state.filters,
+        [data.name]: data.value
+      }
+    }))
   }
 
   onPageChange(event, data) {
@@ -34,7 +52,9 @@ class Folks extends Component {
   }
 
   onCardClick(event, data) {
-    this.setState((state) => ({ selectedFolk: state.NPC[state.selectedPage - 1][data.index] }))
+    this.setState((state) => ({
+      selectedFolk: state.allFolks[(state.selectedPage - 1) * state.folksOnPage + data.index]
+    }))
   }
 
   onModalClose() {
@@ -44,21 +64,30 @@ class Folks extends Component {
   }
 
   render() {
-    let { NPC, selectedPage, selectedFolk } = this.state
+    let { allFolks, selectedPage, selectedFolk, folksOnPage, filters } = this.state
     return (
       <div className="folk-section">
-        <FolksFilters />
-        <FolksList npc={NPC} chunkNumber={selectedPage - 1} onCardClick={this.onCardClick} />
+        <FolksFilters onFilter={debounce(this.onFilter, 500)} />
+        <FolksList
+          npc={allFolks}
+          filters={filters}
+          pageNumber={selectedPage - 1}
+          folksOnPage={folksOnPage}
+          onCardClick={this.onCardClick} />
         <Pagination
           defaultActivePage={selectedPage}
           firstItem={null}
           lastItem={null}
           pointing
           secondary
-          totalPages={NPC.length - 1}
+          totalPages={Math.floor(allFolks.length / folksOnPage) - 1}
           onPageChange={this.onPageChange}
         />
-        <FolkModal show={!!selectedFolk} folkData={selectedFolk} onModalClose={this.onModalClose} />
+        <FolkModal
+          show={!!selectedFolk}
+          folkData={selectedFolk}
+          onModalClose={this.onModalClose}
+        />
       </div>
     );
   }

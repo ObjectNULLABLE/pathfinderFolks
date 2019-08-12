@@ -18,14 +18,17 @@
   flex-direction: column;
   align-items: center;
   min-height: 50vh;
-  padding: 1vw 5vw;
+  padding: 2em 5em;
 }
 
 .folk-list {
+  width: 100%;
+  margin: 50px;
 }
 
 .folk-card {
-  height: 25vh;
+  height: 13em;
+  /* min-width: 22em; */
   font-size: 1.2em;
 }
 
@@ -45,17 +48,17 @@
 }
 
 .menu {
-  height: 6vh;
-  background-color: white;
+  /* height: 100%; */
+  /* background-color: white;
   border-radius: 0 0 8px 8px;
   box-shadow: 2px 0 5px;
   margin: 0 3em;
   padding: 0 1em;
   display: flex;
-  align-items: center;
+  align-items: center; */
 }
-.menu img {
-  height: 100%;
+.menu-img {
+  width: 3em;
 }
 
 .paginator {
