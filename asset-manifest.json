@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/pathfinder-folks/static/css/main.c1286b6d.chunk.css",
-    "main.js": "/pathfinder-folks/static/js/main.17220640.chunk.js",
-    "main.js.map": "/pathfinder-folks/static/js/main.17220640.chunk.js.map",
+    "main.js": "/pathfinder-folks/static/js/main.1e70f3aa.chunk.js",
+    "main.js.map": "/pathfinder-folks/static/js/main.1e70f3aa.chunk.js.map",
     "runtime~main.js": "/pathfinder-folks/static/js/runtime~main.4a3c8da6.js",
     "runtime~main.js.map": "/pathfinder-folks/static/js/runtime~main.4a3c8da6.js.map",
-    "static/js/2.89597895.chunk.js": "/pathfinder-folks/static/js/2.89597895.chunk.js",
-    "static/js/2.89597895.chunk.js.map": "/pathfinder-folks/static/js/2.89597895.chunk.js.map",
+    "static/js/2.31d0e9a8.chunk.js": "/pathfinder-folks/static/js/2.31d0e9a8.chunk.js",
+    "static/js/2.31d0e9a8.chunk.js.map": "/pathfinder-folks/static/js/2.31d0e9a8.chunk.js.map",
     "index.html": "/pathfinder-folks/index.html",
-    "precache-manifest.371ec1d62d15a130278e61a1ea58a0df.js": "/pathfinder-folks/precache-manifest.371ec1d62d15a130278e61a1ea58a0df.js",
+    "precache-manifest.15f435cb5af534492e313578b9da16c7.js": "/pathfinder-folks/precache-manifest.15f435cb5af534492e313578b9da16c7.js",
     "service-worker.js": "/pathfinder-folks/service-worker.js",
     "static/css/main.c1286b6d.chunk.css.map": "/pathfinder-folks/static/css/main.c1286b6d.chunk.css.map",
     "static/media/npc.csv": "/pathfinder-folks/static/media/npc.e8648bbf.csv"
