@@ -4,9 +4,10 @@
   "private": true,
   "homepage": "https://objectnullable.github.io/pathfinder-folks",
   "dependencies": {
-    "d3": "^5.9.7",
+    "dexie": "^2.0.4",
     "gh-pages": "^2.1.1",
     "lodash": "^4.17.15",
+    "papaparse": "^5.0.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",

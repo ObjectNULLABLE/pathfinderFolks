@@ -8,27 +8,27 @@ class FolkModal extends Component {
       folkData &&
       <Modal open={show} onClose={onModalClose} dimmer="inverted" size="small">
         <Modal.Header>
-          {`${folkData.Name} CR ${folkData.CR}`}
+          {`${folkData.name} CR ${folkData.cr}`}
         </Modal.Header>
         <Modal.Content image>
           <Modal.Description className="folk-modal">
-            <Header>{`XP ${folkData.XP}`}</Header>
-            <p>{`${folkData.Alignment} ${folkData.AgeCategory} ${folkData.Race}`}</p>
-            <p>{`Init: ${folkData.Init}; Senses: ${folkData.Senses}`}</p>
-            <p>{`Aura: ${folkData.Aura}`}</p>
+            <Header>{`XP ${folkData.xp}`}</Header>
+            <p>{`${folkData.alignment} ${folkData.ageCategory} ${folkData.Race}`}</p>
+            <p>{`Init: ${folkData.init}; Senses: ${folkData.senses}`}</p>
+            <p>{`Aura: ${folkData.aura}`}</p>
             <Divider content="Defense" section horizontal />
-            <p>{`AC ${folkData.AC}; ${folkData.AC_Mods}`}</p>
-            <p>{`hp ${folkData.HP} ${folkData.HD}`}</p>
-            <p>{`${folkData.Saves}`}</p>
+            <p>{`AC ${folkData.ac}; ${folkData.acMods}`}</p>
+            <p>{`hp ${folkData.hp} ${folkData.hd}`}</p>
+            <p>{`${folkData.saves}`}</p>
             <Divider content="Offense" section horizontal />
-            <p>{`Speed ${folkData.Speed}`}</p>
-            <p>{`Melee ${folkData.Melee}`}</p>
-            <p>{`Space ${folkData.Space}; Reach ${folkData.Reach}`}</p>
-            <p>{`Spell-Like Abilities ${folkData.SpellLikeAbilities}`}</p>
+            <p>{`Speed ${folkData.speed}`}</p>
+            <p>{`Melee ${folkData.melee}`}</p>
+            <p>{`Space ${folkData.space}; Reach ${folkData.reach}`}</p>
+            <p>{`Spell-Like Abilities ${folkData.spellLikeAbilities}`}</p>
             <Divider content="Statistics" section horizontal />
-            <p>{`${folkData.AbilityScores}`}</p>
-            <p>{`Base Atk ${folkData.BaseAtk}; CMB ${folkData.CMB}; CMD ${folkData.CMD}`}</p>
-            <p>{`Feats: ${folkData.Feats}`}</p>
+            <p>{`${folkData.abilityScores}`}</p>
+            <p>{`Base Atk ${folkData.baseAtk}; CMB ${folkData.cmb}; CMD ${folkData.cmd}`}</p>
+            <p>{`Feats: ${folkData.feats}`}</p>
           </Modal.Description>
         </Modal.Content>
       </Modal>

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { csv } from 'd3';
 import debounce from 'lodash/debounce';
+import camelCase from 'lodash/camelCase';
+import Papa from 'papaparse';
 
-import allFolks from '../../Data/npc.csv'
+import db from '../../DB/db';
+import folksFile from '../../DB/npc.csv';
 
 import { Pagination } from 'semantic-ui-react'
 import FolksList from './FolksList';
@@ -25,7 +27,19 @@ class Folks extends Component {
         cr: null,
       }
     }
-    csv(allFolks).then(data => { this.setState({ initialFolksArray: data, allFolks: data }) })
+
+    Papa.parse(folksFile, {
+      download: true,
+      header: true,
+      transformHeader: (header => (camelCase(header))),
+      dynamicTyping: true,
+      complete: (result) => { 
+        this.setState({ allFolks: result.data })
+        if (db.folks.count()) {
+          db.folks.bulkAdd(result.data).then(lastkey => {console.log(lastkey);})
+        }
+      },
+    })
 
     this.onPageChange = this.onPageChange.bind(this)
     this.onModalClose = this.onModalClose.bind(this)
@@ -34,17 +48,17 @@ class Folks extends Component {
   }
 
   onFilter(event, data) {
-    // let filteredFolks = this.state.initialFolksArray.filter(folk => {
-    //   return folk.Name.toLowerCase().includes(data.value.toLowerCase())
-    // })
-    // console.log(filteredFolks);
-    // this.setState({ allFolks: filteredFolks })
     this.setState((state) => ({
       filters: {
         ...state.filters,
         [data.name]: data.value
       }
     }))
+    // let filteredFolks = this.state.initialFolksArray.filter(folk => {
+    //   return folk.Name.toLowerCase().includes(data.value.toLowerCase())
+    // })
+    // console.log(filteredFolks);
+    // this.setState({ allFolks: filteredFolks })
   }
 
   onPageChange(event, data) {

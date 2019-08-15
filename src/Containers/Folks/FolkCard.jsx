@@ -14,12 +14,12 @@ class FolkCard extends Component {
           onClick={this.props.onCardClick}
         >
           <Card.Content>
-            <Card.Header content={`${folk.Name} (CR ${folk.CR})`} />
-            <Card.Meta content={`${folk.Alignment} ${folk.Race} ${folk.Class ? `(${folk.Class})` : ''}`} />
+            <Card.Header content={`${folk.name} (CR ${folk.cr})`} />
+            <Card.Meta content={`${folk.alignment} ${folk.race} ${folk.class ? `(${folk.class})` : ''}`} />
             <Card.Description>
-              <p>{`hp ${folk.HP}; AC ${folk.AC}; CMD ${folk.CMD}`}</p>
-              <p>{`Base Atk ${folk.BaseAtk}; Melee ${folk.Melee.length > 120 ? 'see details' : folk.Melee}`}</p>
-              <p>{`Fort ${folk.Fort}, Ref ${folk.Ref}, Will ${folk.Will}`}</p>
+              <p>{`hp ${folk.hp}; AC ${folk.ac}; CMD ${folk.cmd}`}</p>
+              <p>{`Base Atk ${folk.baseAtk}; Melee ${folk.melee.length > 120 ? 'see details' : folk.melee}`}</p>
+              <p>{`Fort ${folk.fort}, Ref ${folk.ref}, Will ${folk.will}`}</p>
             </Card.Description>
           </Card.Content>
         </Card>

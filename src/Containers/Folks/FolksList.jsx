@@ -11,12 +11,12 @@ class NPCList extends PureComponent {
   }
 
   filterFolks(folksArray, filters) {
-    return folksArray.filter(folk => {
-      if (condition) {
+    // return folksArray.filter(folk => {
+    //   if (condition) {
 
-      }
-      return folk.Name.toLowerCase().includes(data.value.toLowerCase())
-    })
+    //   }
+    //   return folk.Name.toLowerCase().includes(data.value.toLowerCase())
+    // })
   }
 
   render() {
