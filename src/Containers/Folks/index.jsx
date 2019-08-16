@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import debounce from 'lodash/debounce';
 import camelCase from 'lodash/camelCase';
 import Papa from 'papaparse';
@@ -11,34 +11,41 @@ import FolksList from './FolksList';
 import FolksFilters from './FolksFilters';
 import FolkModal from './FolkModal';
 
-class Folks extends Component {
+class Folks extends PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      selectedPage: 1,
-      allFolks: [],
+      currentPage: 0,
+      folksOnPage: 15,
+      folksAmount: 0,
+      folksArray: [],
       selectedFolk: null,
-      folksOnPage: 10,
       filters: {
-        name: null,
-        class: null,
-        race: null,
-        cr: null,
+        name: "",
+        class: "",
+        race: "",
+        cr: "",
       }
     }
 
-    Papa.parse(folksFile, {
-      download: true,
-      header: true,
-      transformHeader: (header => (camelCase(header))),
-      dynamicTyping: true,
-      complete: (result) => { 
-        this.setState({ allFolks: result.data })
-        if (db.folks.count()) {
-          db.folks.bulkAdd(result.data).then(lastkey => {console.log(lastkey);})
-        }
-      },
+    db.folks.count().then(amount => {
+      this.setState({ folksAmount: amount })
+      amount ?
+        console.info('db already imported') :
+        Papa.parse(folksFile, {
+          download: true,
+          header: true,
+          transformHeader: (header => (camelCase(header))),
+          dynamicTyping: true,
+          complete: (result) => {
+            db.folks.bulkAdd(result.data)
+          },
+        })
+    })
+
+    db.folks.orderBy("cr").limit(this.state.folksOnPage).toArray(res => {
+      this.setState({ folksArray: res })
     })
 
     this.onPageChange = this.onPageChange.bind(this)
@@ -47,27 +54,23 @@ class Folks extends Component {
     this.onFilter = this.onFilter.bind(this)
   }
 
+
   onFilter(event, data) {
     this.setState((state) => ({
       filters: {
         ...state.filters,
-        [data.name]: data.value
+        [data.name]: data.value.toLowerCase()
       }
     }))
-    // let filteredFolks = this.state.initialFolksArray.filter(folk => {
-    //   return folk.Name.toLowerCase().includes(data.value.toLowerCase())
-    // })
-    // console.log(filteredFolks);
-    // this.setState({ allFolks: filteredFolks })
   }
 
   onPageChange(event, data) {
-    this.setState({ selectedPage: data.activePage })
+    this.setState({ currentPage: data.activePage - 1 })
   }
 
   onCardClick(event, data) {
     this.setState((state) => ({
-      selectedFolk: state.allFolks[(state.selectedPage - 1) * state.folksOnPage + data.index]
+      selectedFolk: state.folksArray[state.currentPage * state.folksOnPage + data.index]
     }))
   }
 
@@ -77,24 +80,51 @@ class Folks extends Component {
     })
   }
 
+  async componentDidUpdate(prevProps, prevState) {
+    let { currentPage, folksOnPage, filters } = this.state
+    let result
+    if (
+      prevState.currentPage !== currentPage ||
+      prevState.filters.name !== filters.name
+    ) {
+      result =
+        await db.folks
+          .where("searchableName")
+          .startsWithIgnoreCase(filters.name)
+          .reverse()
+          .offset(currentPage * folksOnPage)
+          .limit(folksOnPage)
+          .sortBy("cr")
+      this.setState({ folksArray: result })
+      // db.folks
+      //   .filter(folk => (folk.name.includes(filters.name)))
+      //   .offset(currentPage * folksOnPage)
+      //   .limit(folksOnPage)
+      //   .toArray(res => {
+      //     this.setState({ folksArray: res })
+      //   })
+    }
+  }
+
   render() {
-    let { allFolks, selectedPage, selectedFolk, folksOnPage, filters } = this.state
+    let { folksArray, currentPage, selectedFolk, folksOnPage, filters, folksAmount } = this.state
+    console.log("rndr");
     return (
       <div className="folk-section">
         <FolksFilters onFilter={debounce(this.onFilter, 500)} />
         <FolksList
-          npc={allFolks}
+          npc={folksArray}
           filters={filters}
-          pageNumber={selectedPage - 1}
+          pageNumber={currentPage}
           folksOnPage={folksOnPage}
           onCardClick={this.onCardClick} />
         <Pagination
-          defaultActivePage={selectedPage}
+          defaultActivePage={currentPage + 1}
           firstItem={null}
           lastItem={null}
           pointing
           secondary
-          totalPages={Math.floor(allFolks.length / folksOnPage) - 1}
+          totalPages={Math.floor(folksAmount / folksOnPage) - 1}
           onPageChange={this.onPageChange}
         />
         <FolkModal

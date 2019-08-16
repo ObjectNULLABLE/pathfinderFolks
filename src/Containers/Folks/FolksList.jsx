@@ -1,14 +1,8 @@
 import React, { PureComponent } from 'react';
 import FolkCard from './FolkCard';
-import { Grid, Loader, Dimmer } from 'semantic-ui-react';
-import slice from 'lodash/slice';
+import { Grid, Loader } from 'semantic-ui-react';
 
 class NPCList extends PureComponent {
-
-  getCurrentPage(allFolks, pageNumber, folksOnPage) {
-    return allFolks.length > 0 ?
-      slice(allFolks, pageNumber * folksOnPage, pageNumber * folksOnPage + folksOnPage) : []
-  }
 
   filterFolks(folksArray, filters) {
     // return folksArray.filter(folk => {
@@ -20,12 +14,11 @@ class NPCList extends PureComponent {
   }
 
   render() {
-    let { npc, pageNumber, folksOnPage } = this.props
-    let currentPage = this.getCurrentPage(npc, pageNumber, folksOnPage)
+    let { npc } = this.props
     return (
-      currentPage.length > 0 ? <Grid className="folk-list" centered padded>
+      npc.length > 0 ? <Grid className="folk-list" centered padded>
         {
-          currentPage.map((folkData, index) => (
+          npc.map((folkData, index) => (
             <FolkCard
               key={index}
               folkIndex={index}
@@ -34,7 +27,7 @@ class NPCList extends PureComponent {
             />
           ))
         }
-      </Grid > : <Dimmer active inverted><Loader indeterminate size='big' /></Dimmer>
+      </Grid > : <Loader active indeterminate inline size='big' />
     );
   }
 }

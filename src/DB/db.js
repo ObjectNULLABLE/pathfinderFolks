@@ -1,7 +1,8 @@
 import Dexie from "dexie"
+import words from 'lodash/words';
 
 const db = new Dexie('pathfinder');
-db.version(1).stores({ folks: '++,name,class,cr,race,xp,fort,ref,will' });
+db.version(1).stores({ folks: '++,name,*searchableName,class,cr,race,xp,fort,ref,will' });
 
 db.folks.hook("creating", function (primKey, obj, trans) {
   if (typeof obj.name == 'string') obj.searchableName = getAllWords(obj.name);
@@ -22,7 +23,7 @@ db.folks.hook("updating", function (mods, primKey, obj, trans) {
 
 function getAllWords(text) {
   /// <param name="text" type="String"></param>
-  var allWordsIncludingDups = text.split(' ');
+  var allWordsIncludingDups = words(text.toLowerCase());
   var wordSet = allWordsIncludingDups.reduce(function (prev, current) {
       prev[current] = true;
       return prev;
