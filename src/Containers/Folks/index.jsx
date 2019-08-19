@@ -29,24 +29,6 @@ class Folks extends PureComponent {
       }
     }
 
-    db.folks.count().then(amount => {
-      this.setState({ folksAmount: amount })
-      amount ?
-        console.info('db already imported') :
-        Papa.parse(folksFile, {
-          download: true,
-          header: true,
-          transformHeader: (header => (camelCase(header))),
-          dynamicTyping: true,
-          complete: (result) => {
-            db.folks.bulkAdd(result.data)
-          },
-        })
-    })
-
-    db.folks.orderBy("cr").limit(this.state.folksOnPage).toArray(res => {
-      this.setState({ folksArray: res })
-    })
 
     this.onPageChange = this.onPageChange.bind(this)
     this.onModalClose = this.onModalClose.bind(this)
@@ -59,6 +41,7 @@ class Folks extends PureComponent {
     this.setState((state) => ({
       filters: {
         ...state.filters,
+        currentPage: 0,
         [data.name]: data.value.toLowerCase()
       }
     }))
@@ -70,7 +53,7 @@ class Folks extends PureComponent {
 
   onCardClick(event, data) {
     this.setState((state) => ({
-      selectedFolk: state.folksArray[state.currentPage * state.folksOnPage + data.index]
+      selectedFolk: state.folksArray[data.index]
     }))
   }
 
@@ -82,20 +65,24 @@ class Folks extends PureComponent {
 
   async componentDidUpdate(prevProps, prevState) {
     let { currentPage, folksOnPage, filters } = this.state
-    let result
     if (
       prevState.currentPage !== currentPage ||
       prevState.filters.name !== filters.name
     ) {
-      result =
-        await db.folks
+
+      this.setState({
+        folksArray: await db.folks
           .where("searchableName")
-          .startsWithIgnoreCase(filters.name)
-          .reverse()
+          .startsWith(filters.name)
           .offset(currentPage * folksOnPage)
           .limit(folksOnPage)
-          .sortBy("cr")
-      this.setState({ folksArray: result })
+          .sortBy("cr"),
+        folksAmount: await db.folks
+          .where("searchableName")
+          .startsWith(filters.name)
+          .count()
+        // folksAmount: result.length / folksOnPage) - 1,
+      })
       // db.folks
       //   .filter(folk => (folk.name.includes(filters.name)))
       //   .offset(currentPage * folksOnPage)
@@ -106,9 +93,29 @@ class Folks extends PureComponent {
     }
   }
 
+  async componentDidMount() {
+    let folksAmount = await db.folks.count()
+
+    folksAmount ? console.info('db already imported') :
+      await Papa.parse(folksFile, {
+        download: true,
+        header: true,
+        transformHeader: (header => (camelCase(header))),
+        dynamicTyping: true,
+        complete: (result) => {
+          db.folks.bulkAdd(result.data)
+        },
+      })
+
+    this.setState({
+      folksArray: await db.folks.limit(this.state.folksOnPage).sortBy("cr"),
+      folksAmount: folksAmount
+    })
+  }
+
   render() {
     let { folksArray, currentPage, selectedFolk, folksOnPage, filters, folksAmount } = this.state
-    console.log("rndr");
+    console.count("rendered: ");
     return (
       <div className="folk-section">
         <FolksFilters onFilter={debounce(this.onFilter, 500)} />
