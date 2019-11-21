@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Modal, Divider, Container } from 'semantic-ui-react';
+import { Header, Modal, Divider } from 'semantic-ui-react';
 
 class FolkModal extends Component {
   render() {
