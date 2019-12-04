@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Menu, Image } from 'semantic-ui-react';
+import { Menu, Image, Button } from 'semantic-ui-react';
+import SignOutButton from '../SignOut';
 
 import { Link, withRouter } from 'react-router-dom';
 
@@ -7,6 +8,7 @@ import * as ROUTES from '../../constants/routes';
 
 class AppMenu extends Component {
   render() {
+    console.log(this.props.authUser ? this.props.authUser : "not logined");
     return (
       <Menu size="massive" secondary>
         <Menu.Item fitted='vertically' >
@@ -25,21 +27,27 @@ class AppMenu extends Component {
         <Menu.Item link>Bestiary</Menu.Item>
         <Menu.Item link>Spells</Menu.Item>
         <Menu.Item link>Feats</Menu.Item>
-        <Menu.Item
-          link
-          position="right"
-          active={this.props.location.pathname === ROUTES.SIGN_IN}
-          onClick={() => this.props.history.push(ROUTES.SIGN_IN)}
-        >
-          Sign in
-        </Menu.Item>
-        <Menu.Item
-          link
-          position="right"
-          active={this.props.location.pathname === ROUTES.SIGN_UP}
-          onClick={() => this.props.history.push(ROUTES.SIGN_UP)}
-        >
-          Sign up
+        <Menu.Item position="right">
+          {this.props.authUser && this.props.authUser.email}
+          <Button.Group>
+            {!this.props.authUser ?
+              <>
+                <Button
+                  active={this.props.location.pathname === ROUTES.SIGN_IN}
+                  onClick={() => this.props.history.push(ROUTES.SIGN_IN)}
+                >
+                  Sign in
+                </Button>
+                <Button
+                  active={this.props.location.pathname === ROUTES.SIGN_UP}
+                  onClick={() => this.props.history.push(ROUTES.SIGN_UP)}
+                >
+                  Sign up
+                </Button>
+              </> :
+              <SignOutButton />
+            }
+          </Button.Group>
         </Menu.Item>
       </Menu>
     );

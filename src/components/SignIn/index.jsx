@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 
+import { Form, Button } from 'semantic-ui-react';
+
 import { SignUpLink } from '../SignUp';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
 const SignInPage = () => (
-  <div>
-    <h1>SignIn</h1>
+  <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <h1>Sign In</h1>
     <SignInForm />
     <SignUpLink />
   </div>
@@ -46,27 +48,32 @@ class SignInFormBase extends Component {
   render() {
     const { email, password, error } = this.state;
     const isInvalid = password === '' || email === '';
+
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          name="password"
-          value={password}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
-        <button disabled={isInvalid} type="submit">
+      <Form onSubmit={this.onSubmit}>
+        <Form.Field>
+          <input
+            name="email"
+            value={email}
+            onChange={this.onChange}
+            type="text"
+            placeholder="Email Address"
+          />
+        </Form.Field>
+        <Form.Field>
+          <input
+            name="password"
+            value={password}
+            onChange={this.onChange}
+            type="password"
+            placeholder="Password"
+          />
+        </Form.Field>
+        <Button disabled={isInvalid} type="submit">
           Sign In
-        </button>
+          </Button>
         {error && <p>{error.message}</p>}
-      </form>
+      </Form>
     );
   }
 }

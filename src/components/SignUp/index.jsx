@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
+
+import { Form, Button } from 'semantic-ui-react';
+
+
 import { withFirebase } from '../Firebase';
+
 import * as ROUTES from '../../constants/routes';
 
 const SignUpPage = () => (
-  <div>
-    <h1>SignUp</h1>
+  <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <h1>Sign Up</h1>
     <SignUpForm />
   </div>
 );
@@ -59,38 +64,46 @@ class SignUpFormBase extends Component {
       username === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          name="username"
-          value={username}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Full Name"
-        />
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          name="passwordOne"
-          value={passwordOne}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
-        <input
-          name="passwordTwo"
-          value={passwordTwo}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Confirm Password"
-        />
-        <button disabled={isInvalid} type="submit">Sign Up</button>
+      <Form onSubmit={this.onSubmit}>
+        <Form.Field>
+          <input
+            name="username"
+            value={username}
+            onChange={this.onChange}
+            type="text"
+            placeholder="Full Name"
+          />
+        </Form.Field>
+        <Form.Field>
+          <input
+            name="email"
+            value={email}
+            onChange={this.onChange}
+            type="text"
+            placeholder="Email Address"
+          />
+        </Form.Field>
+        <Form.Field>
+          <input
+            name="passwordOne"
+            value={passwordOne}
+            onChange={this.onChange}
+            type="password"
+            placeholder="Password"
+          />
+        </Form.Field>
+        <Form.Field>
+          <input
+            name="passwordTwo"
+            value={passwordTwo}
+            onChange={this.onChange}
+            type="password"
+            placeholder="Confirm Password"
+          />
+        </Form.Field>
+        <Button disabled={isInvalid} type="submit">Sign Up</Button>
         {error && <p>{error.message}</p>}
-      </form>
+      </Form>
     );
   }
 }
