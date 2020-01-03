@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { Menu, Image, Button } from 'semantic-ui-react';
+import { Menu, Image, Button, Dropdown } from 'semantic-ui-react';
 import SignOutButton from '../SignOut';
 
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import * as ROUTES from '../../constants/routes';
 
 class AppMenu extends Component {
   render() {
-    console.log(this.props.authUser ? this.props.authUser : "not logined");
     return (
       <Menu size="massive" secondary>
         <Menu.Item fitted='vertically' >
@@ -19,35 +18,53 @@ class AppMenu extends Component {
           />
         </Menu.Item>
         <Menu.Item
+          active={this.props.location.pathname === ROUTES.GAME}
+          onClick={() => this.props.history.push(ROUTES.GAME)}
+          content="Game"
+        />
+        <Menu.Item
           active={this.props.location.pathname === ROUTES.FOLKS}
           onClick={() => this.props.history.push(ROUTES.FOLKS)}
-        >
-          Folks
-        </Menu.Item>
-        <Menu.Item link>Bestiary</Menu.Item>
-        <Menu.Item link>Spells</Menu.Item>
-        <Menu.Item link>Feats</Menu.Item>
+          content="Folks"
+        />
+        <Menu.Item
+          active={this.props.location.pathname === ROUTES.BESTIARY}
+          content="Bestiary"
+        />
+        <Menu.Item content="Spells" />
+        <Menu.Item content="Feats" />
         <Menu.Item position="right">
-          {this.props.authUser && this.props.authUser.email}
-          <Button.Group>
-            {!this.props.authUser ?
-              <>
-                <Button
-                  active={this.props.location.pathname === ROUTES.SIGN_IN}
-                  onClick={() => this.props.history.push(ROUTES.SIGN_IN)}
-                >
-                  Sign in
-                </Button>
-                <Button
-                  active={this.props.location.pathname === ROUTES.SIGN_UP}
-                  onClick={() => this.props.history.push(ROUTES.SIGN_UP)}
-                >
-                  Sign up
-                </Button>
-              </> :
-              <SignOutButton />
-            }
-          </Button.Group>
+          {!this.props.authUser ?
+            <Button.Group>
+              <Button
+                active={this.props.location.pathname === ROUTES.SIGN_IN}
+                onClick={() => this.props.history.push(ROUTES.SIGN_IN)}
+                content="Sign in"
+              />
+              <Button
+                active={this.props.location.pathname === ROUTES.SIGN_UP}
+                onClick={() => this.props.history.push(ROUTES.SIGN_UP)}
+                content="Sign up"
+              />
+            </Button.Group> :
+            <Dropdown text={this.props.authUser.email} compact>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={() => this.props.history.push(ROUTES.GAME)}>
+                  Inventory
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  Favorites
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  Settings
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item>
+                  <SignOutButton />
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          }
         </Menu.Item>
       </Menu>
     );

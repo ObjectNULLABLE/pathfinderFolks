@@ -97,7 +97,7 @@ class Folks extends PureComponent {
     let folksAmount = await db.folks.count()
 
     folksAmount ? console.info('db already imported') :
-      await Papa.parse(folksFile, {
+      Papa.parse(folksFile, {
         download: true,
         header: true,
         transformHeader: (header => (camelCase(header))),
@@ -115,7 +115,7 @@ class Folks extends PureComponent {
 
   render() {
     let { folksArray, currentPage, selectedFolk, folksOnPage, filters, folksAmount } = this.state
-    console.count("rendered: ");
+    // console.count("rendered: ");
     return (
       <div className="folk-section">
         <FolksFilters onFilter={debounce(this.onFilter, 500)} />

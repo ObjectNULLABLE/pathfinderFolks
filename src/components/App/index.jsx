@@ -5,6 +5,7 @@ import * as ROUTES from '../../constants/routes';
 
 import AppMenu from '../AppMenu';
 import FolksPage from '../Folks';
+import GamePage from '../Game'
 import SignUpPage from '../SignUp';
 import { withFirebase } from '../Firebase';
 
@@ -34,11 +35,13 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.authUser ? this.state.authUser : "not logined");
     return (
       <Router>
         <div className="App">
           <AppMenu authUser={this.state.authUser} />
           <Route path={ROUTES.FOLKS} component={FolksPage} />
+          <Route path={ROUTES.GAME} component={GamePage} />
           <Route path={ROUTES.SIGN_IN} component={SignInPage} />
           <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
           <Route path={ROUTES.PASSWORD_FORGET} />
