@@ -1,16 +1,16 @@
-#root {
-  height: inherit;
+body {
+  /* background-image: url("http://imagizer.imageshack.com/a/img924/5383/6TKpYP.jpg"); */
+  background-image: url("/SeoniBackground.jpg");
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 .App {
-  font-family: 'Alegreya', serif;
-  /* background-image: url('http://imagizer.imageshack.com/a/img924/5383/6TKpYP.jpg'); */
-  background-image: url('https://wallpapercave.com/wp/wp2427537.jpg');
-  background-position: 0 30%;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  overflow: auto;
-  height: 100%;
+  font-family: "Alegreya", serif;
+}
+
+.Page {
+  /* overflow: auto; */
 }
 
 .folk-section {

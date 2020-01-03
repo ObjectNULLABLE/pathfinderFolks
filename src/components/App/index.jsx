@@ -1,28 +1,30 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import * as ROUTES from '../../constants/routes';
+import * as ROUTES from "../../constants/routes";
 
-import AppMenu from '../AppMenu';
-import FolksPage from '../Folks';
-import GamePage from '../Game'
-import SignUpPage from '../SignUp';
-import { withFirebase } from '../Firebase';
+import AppMenu from "../AppMenu";
+import FolksPage from "../Folks";
+import CharactersPage from "../Characters";
+import GamesPage from "../Games";
+import SignUpPage from "../SignUp";
+import { withFirebase } from "../Firebase";
 
-import './App.css';
-import SignInPage from '../SignIn';
+import "./App.css";
+import SignInPage from "../SignIn";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      authUser: null,
+      authUser: null
     };
   }
 
   componentDidMount() {
-    this.listener = this.props.firebase.auth
-      .onAuthStateChanged(authUser => this.setState({ authUser }));
+    this.listener = this.props.firebase.auth.onAuthStateChanged(authUser =>
+      this.setState({ authUser })
+    );
   }
 
   componentWillUnmount() {
@@ -35,38 +37,40 @@ class App extends Component {
       <Router>
         <div className="App">
           <AppMenu authUser={this.state.authUser} />
-          <Route path={ROUTES.FOLKS} component={FolksPage} />
-          <Route path={ROUTES.GAME} component={GamePage} />
-          <Route path={ROUTES.SIGN_IN} component={SignInPage} />
-          <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-          <Route path={ROUTES.PASSWORD_FORGET} />
-          <Route path={ROUTES.ACCOUNT} />
+          <div className="Page">
+            <Route path={ROUTES.FOLKS} component={FolksPage} />
+            <Route path={ROUTES.GAMES} component={GamesPage} />
+            <Route path={ROUTES.CHARACTERS} component={CharactersPage} />
+            <Route path={ROUTES.SIGN_IN} component={SignInPage} />
+            <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
+            <Route path={ROUTES.PASSWORD_FORGET} />
+            <Route path={ROUTES.ACCOUNT} />
+          </div>
         </div>
       </Router>
     );
   }
 }
 
-const PrivateRoute = ({ authenticated, children, ...rest }) => {
-  return (
-    <Route
+// const PrivateRoute = ({ authenticated, children, ...rest }) => {
+//   return (
+//     <Route
 
-      {...rest}
-      render={({ location }) =>
-        authenticated ? (
-          children
-        ) : (
-            <Redirect
-              to={{
-                pathname: ROUTES.SIGN_IN,
-                state: { from: location }
-              }}
-            />
-          )
-      }
-    />
-  );
-}
-
+//       {...rest}
+//       render={({ location }) =>
+//         authenticated ? (
+//           children
+//         ) : (
+//             <Redirect
+//               to={{
+//                 pathname: ROUTES.SIGN_IN,
+//                 state: { from: location }
+//               }}
+//             />
+//           )
+//       }
+//     />
+//   );
+// }
 
 export default withFirebase(App);
