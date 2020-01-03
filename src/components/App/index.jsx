@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 import * as ROUTES from '../../constants/routes';
 
@@ -21,13 +21,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.listener = this.props.firebase.auth.onAuthStateChanged(
-      authUser => {
-        authUser
-          ? this.setState({ authUser })
-          : this.setState({ authUser: null });
-      },
-    );
+    this.listener = this.props.firebase.auth
+      .onAuthStateChanged(authUser => this.setState({ authUser }));
   }
 
   componentWillUnmount() {
@@ -35,7 +30,7 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.authUser ? this.state.authUser : "not logined");
+    // console.log(this.state.authUser ? this.state.authUser : "not logined");
     return (
       <Router>
         <div className="App">
@@ -50,6 +45,27 @@ class App extends Component {
       </Router>
     );
   }
+}
+
+const PrivateRoute = ({ authenticated, children, ...rest }) => {
+  return (
+    <Route
+
+      {...rest}
+      render={({ location }) =>
+        authenticated ? (
+          children
+        ) : (
+            <Redirect
+              to={{
+                pathname: ROUTES.SIGN_IN,
+                state: { from: location }
+              }}
+            />
+          )
+      }
+    />
+  );
 }
 
 
