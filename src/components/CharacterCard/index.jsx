@@ -1,13 +1,14 @@
 import React from "react";
 import { Card } from "semantic-ui-react";
+import { withRouter } from "react-router-dom";
 
-const CharacterCard = ({ character }) => {
+const CharacterCard = ({ character, characterid, history }) => {
   return (
     <Card
       // className="folk-card"
       fluid
       raised
-      // onClick={onCardClick}
+      onClick={() => history.push(`/character/${characterid}`)}
     >
       <Card.Content>
         <Card.Header content={character.name} />
@@ -22,4 +23,4 @@ const CharacterCard = ({ character }) => {
   );
 };
 
-export default CharacterCard;
+export default withRouter(CharacterCard);
