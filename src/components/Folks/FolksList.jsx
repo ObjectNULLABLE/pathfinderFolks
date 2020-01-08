@@ -25,8 +25,8 @@ class NPCList extends PureComponent {
         ))}
       </Grid>
     ) : (
-      <Loader active indeterminate inline size="big" />
-    );
+        <Loader active indeterminate inline size="big" />
+      );
   }
 }
 

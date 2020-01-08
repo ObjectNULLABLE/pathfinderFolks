@@ -6,7 +6,7 @@ export const FolkCard = ({ folk, folkIndex, onCardClick }) => {
     <GridColumn computer={5}>
       <Card
         index={folkIndex}
-        className="folk-card"
+        className="base-card"
         fluid
         raised
         onClick={onCardClick}
@@ -16,13 +16,13 @@ export const FolkCard = ({ folk, folkIndex, onCardClick }) => {
           <Card.Meta
             content={`${folk.alignment} ${folk.race} ${
               folk.class ? `(${folk.class})` : ""
-            }`}
+              }`}
           />
           <Card.Description>
             <p>{`hp ${folk.hp}; AC ${folk.ac}; CMD ${folk.cmd}`}</p>
             <p>{`Base Atk ${folk.baseAtk}; Melee ${
               folk.melee.length > 120 ? "see details" : folk.melee
-            }`}</p>
+              }`}</p>
             <p>{`Fort ${folk.fort}, Ref ${folk.ref}, Will ${folk.will}`}</p>
           </Card.Description>
         </Card.Content>
