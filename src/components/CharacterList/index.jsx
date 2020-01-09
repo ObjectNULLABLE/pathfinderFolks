@@ -9,7 +9,9 @@ import CharacterCard from "../CharacterCard";
 
 const CharactersPage = ({ firebase }) => {
   const [characters, setCharacters] = useState({});
-  const [showCreateCharacterModal, setShowCreateCharacterModal] = useState(false)
+  const [showCreateCharacterModal, setShowCreateCharacterModal] = useState(
+    false
+  );
 
   useEffect(() => {
     if (firebase.auth.currentUser) {
@@ -17,20 +19,27 @@ const CharactersPage = ({ firebase }) => {
         .characters()
         .orderByChild("user")
         .equalTo(firebase.auth.currentUser.uid)
-        .once("value")
-        .then(snapshot => setCharacters({ ...snapshot.val() }));
+        .on("value", snapshot => {
+          console.count("onChange");
+          setCharacters({ ...snapshot.val() });
+        });
     }
+    // return () => {
+    //   firebase
+    //     .characters()
+    //     .orderByChild("user")
+    //     .equalTo(firebase.auth.currentUser.uid)
+    //     .off();
+    // };
   }, [firebase, firebase.auth.currentUser]);
 
   return (
     <Grid centered padded>
-      {
-        map(characters, (character, key) => (
-          <Grid.Column key={key} computer={3}>
-            <CharacterCard character={character} characterid={key} />
-          </Grid.Column>
-        ))
-      }
+      {map(characters, (character, key) => (
+        <Grid.Column key={key} computer={3}>
+          <CharacterCard character={character} characterid={key} />
+        </Grid.Column>
+      ))}
       <Grid.Column computer={3} stretched>
         <Button
           fluid
