@@ -8,8 +8,8 @@ import * as ROUTES from "../../constants/routes";
 
 export const AppMenu = ({ location, history, authUser }) => {
   return (
-    <Menu size="massive" secondary>
-      <Menu.Item fitted="vertically">
+    <Menu size="massive" secondary stackable>
+      <Menu.Item header fitted="vertically">
         <Image size="small" wrapped src="/pathfinder_logo.png" />
       </Menu.Item>
       <Menu.Item
@@ -38,25 +38,25 @@ export const AppMenu = ({ location, history, authUser }) => {
             />
           </Button.Group>
         ) : (
-          <Dropdown text={authUser.email} compact>
-            <Dropdown.Menu>
-              <Dropdown.Item
-                onClick={() => history.push(ROUTES.CHARACTERS)}
-                content="Characters"
-              />
-              <Dropdown.Item
-                onClick={() => history.push(ROUTES.GAMES)}
-                content="Games"
-              />
-              <Dropdown.Item>Favorites</Dropdown.Item>
-              <Dropdown.Item>Settings</Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item>
-                <SignOutButton />
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        )}
+            <Dropdown text={authUser.email} compact>
+              <Dropdown.Menu>
+                <Dropdown.Item
+                  onClick={() => history.push(ROUTES.CHARACTERS)}
+                  content="Characters"
+                />
+                <Dropdown.Item
+                  onClick={() => history.push(ROUTES.GAMES)}
+                  content="Games"
+                />
+                <Dropdown.Item>Favorites</Dropdown.Item>
+                <Dropdown.Item>Settings</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item>
+                  <SignOutButton />
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          )}
       </Menu.Item>
     </Menu>
   );

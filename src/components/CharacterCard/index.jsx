@@ -14,9 +14,7 @@ const CharacterCard = ({ character, characterid, history }) => {
       <Card.Content>
         <Card.Header content={character.name} />
         <Card.Meta
-          content={`${character.game} placeholder ${
-            character.class ? `(${character.class})` : ""
-            }`}
+          content={`${character.game} placeholder ${character.class ? character.class : ""}`}
         />
         <Card.Description content={character.note} />
       </Card.Content>

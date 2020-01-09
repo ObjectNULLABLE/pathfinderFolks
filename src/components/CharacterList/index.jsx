@@ -36,11 +36,11 @@ const CharactersPage = ({ firebase }) => {
   return (
     <Grid centered padded>
       {map(characters, (character, key) => (
-        <Grid.Column key={key} computer={3}>
+        <Grid.Column key={key} computer={3} mobile={12} >
           <CharacterCard character={character} characterid={key} />
         </Grid.Column>
       ))}
-      <Grid.Column computer={3} stretched>
+      <Grid.Column computer={3} mobile={12} stretched>
         <Button
           fluid
           content="New character"

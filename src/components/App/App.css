@@ -7,18 +7,22 @@ body {
 
 .App {
   font-family: "Alegreya", serif;
+  display: flex;
+  flex-direction: column;
 }
 
 .Page {
   /* overflow: auto; */
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .folk-section {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 50vh;
-  padding: 2em 5em;
+  min-height: 50vh; */
 }
 
 .folk-list {

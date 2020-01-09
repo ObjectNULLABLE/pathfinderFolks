@@ -23,6 +23,7 @@ const CreateCharacterForm = ({ firebase, show, onModalClose }) => {
       name: formValues.name,
       class: formValues.class,
       game: formValues.game,
+      inventory: null,
       notes: formValues.notes
     });
   };
