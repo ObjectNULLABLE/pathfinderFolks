@@ -8,7 +8,8 @@ const CreateCharacterForm = ({ firebase, show, onModalClose }) => {
     name: "",
     game: "",
     class: "",
-    notes: ""
+    notes: "",
+    pictureUrl: "",
   });
 
   const handleInputChange = (e, { id, value }) => {
@@ -20,11 +21,42 @@ const CreateCharacterForm = ({ firebase, show, onModalClose }) => {
     const newCharKey = firebase.characters().push().key;
     firebase.character(newCharKey).set({
       user: firebase.auth.currentUser.uid,
+      pictureUrl: formValues.pictureUrl,
       name: formValues.name,
       class: formValues.class,
       game: formValues.game,
+      gear: {
+        clothing: "",
+        armor: "",
+        shield: "",
+        weapon: "",
+      },
+      magicGear: {
+        head: "",
+        headband: "",
+        face: "",
+        neck: "",
+        shoulders: "",
+        chest: "",
+        body: "",
+        wrists: "",
+        hands: "",
+        belt: "",
+        feet: "",
+        ring1: "",
+        ring2: "",
+        slotless: ""
+      },
       inventory: null,
-      notes: formValues.notes
+      notes: formValues.notes,
+      strength: 10,
+      weight: 0,
+      wealth: {
+        platinum: 0,
+        gold: 0,
+        silver: 0,
+        copper: 0
+      }
     });
   };
 
@@ -41,6 +73,7 @@ const CreateCharacterForm = ({ firebase, show, onModalClose }) => {
         <Form >
           <Form.Input id="name" label="Name" onChange={handleInputChange} />
           <Form.Input id="class" label="Class" onChange={handleInputChange} />
+          <Form.Input id="pictureUrl" label="Picture link" onChange={handleInputChange} />
           {/* <Form.Input id="game" label="Game" onChange={handleInputChange} /> */}
           <Form.Input id="notes" label="Notes" onChange={handleInputChange} />
         </Form>

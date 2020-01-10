@@ -24,13 +24,13 @@ const CharactersPage = ({ firebase }) => {
           setCharacters({ ...snapshot.val() });
         });
     }
-    // return () => {
-    //   firebase
-    //     .characters()
-    //     .orderByChild("user")
-    //     .equalTo(firebase.auth.currentUser.uid)
-    //     .off();
-    // };
+    return () => {
+      firebase
+        .characters()
+        .orderByChild("user")
+        .equalTo(firebase.auth.currentUser.uid)
+        .off();
+    };
   }, [firebase, firebase.auth.currentUser]);
 
   return (

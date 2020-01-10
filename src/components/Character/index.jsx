@@ -1,28 +1,46 @@
 import React, { useState, useEffect } from "react";
-import { List, Button, Card, Grid, Label, Icon } from 'semantic-ui-react'
+import { List, Button, Card, Grid, Label, Icon, Header, Image } from 'semantic-ui-react'
 import map from "lodash/map";
+
+import NewItemModal from '../NewItemModal'
 
 import { withFirebase } from "../Firebase";
 
 const Character = ({ match, firebase }) => {
   const [character, setCharacter] = useState(null);
+  const [showNewItemModal, setShowNewItemModal] = useState(false)
 
   useEffect(() => {
     firebase
       .character(match.params.characterId)
-      .once("value")
-      .then(snapshot => setCharacter({ ...snapshot.val() }));
+      .on("value", snapshot => setCharacter({ ...snapshot.val() }))
+    return () => {
+      firebase
+        .character(match.params.characterId)
+        .off()
+    };
   }, [firebase, match.params.characterId]);
 
+  const createItem = (item) => {
+    firebase
+      .character(match.params.characterId)
+      .child("inventory")
+      .push({ ...item })
+  }
+
   return character && (
-    <Grid container>
-      <Grid.Row stretched>
+    <>
+      <Grid container>
         <Grid.Column width={12}>
+
           <Grid>
             <Grid.Column width={6}>
               <Card>
                 <Card.Content>
-                  <Card.Header content={character.name} />
+                  <Image src={character.pictureUrl} />
+                  <Card.Header>
+                    <Header content={character.name} />
+                  </Card.Header>
                   <Card.Meta content={character.class} />
                   <Card.Description>
                     <Label>
@@ -37,7 +55,9 @@ const Character = ({ match, firebase }) => {
                 <Card.Content>
                   <Card.Header content="Wealth" />
                   <Card.Description>
-                    Gold: 99999
+                    {map(character.wealth, (value, key) => (
+                      <div key={key}>{`${key}: ${value}`}</div>
+                    ))}
                   </Card.Description>
                 </Card.Content>
               </Card>
@@ -47,23 +67,37 @@ const Character = ({ match, firebase }) => {
                 <Card.Content>
                   <Card.Header content="Weight" />
                   <Card.Description>
-                    Items: 9
+                    Items:
+                    Wealth:
+                  </Card.Description>
+                </Card.Content>
+              </Card>
+            </Grid.Column>
+            <Grid.Column width={6}>
+              <Card>
+                <Card.Content>
+                  <Card.Header content="Gear" />
+                  <Card.Description>
+                    {map(character.gear, (value, key) => (
+                      <div key={key}>{`${key}: ${value}`}</div>
+                    ))}
                   </Card.Description>
                 </Card.Content>
               </Card>
             </Grid.Column>
           </Grid>
+
         </Grid.Column>
         <Grid.Column width={4}>
           <Card >
             <Card.Content>
               <Card.Header>
-                Inventory
+                <Header content="Inventory" />
               </Card.Header>
               <Card.Description>
                 <List divided size="large">
                   {map(character.inventory, (item, key) => (
-                    <List.Item>
+                    <List.Item key={key}>
                       <List.Header>
                         {item.name}
                       </List.Header>
@@ -75,11 +109,17 @@ const Character = ({ match, firebase }) => {
                 </List>
               </Card.Description>
             </Card.Content>
-            <Button icon="plus" content="New item" />
+            <Button
+              icon="plus" content="New item" onClick={() => setShowNewItemModal(true)} />
           </Card>
         </Grid.Column>
-      </Grid.Row>
-    </Grid>
+      </Grid>
+      <NewItemModal
+        show={showNewItemModal}
+        onModalClose={() => setShowNewItemModal(false)}
+        onModalSubmit={createItem}
+      />
+    </>
   )
 
 };
