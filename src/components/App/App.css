@@ -14,7 +14,8 @@ body {
 .Page {
   /* overflow: auto; */
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  /* justify-content: center; */
   width: 100%;
 }
 
